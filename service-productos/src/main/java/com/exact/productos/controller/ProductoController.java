@@ -47,11 +47,13 @@ public class ProductoController {
 		Producto productoBD=null;
 		try {
 			productoBD = mapper.readValue(producto, Producto.class);
-		} catch (IOException e) {
-			e.printStackTrace();
+			productoBD.setActivo(true);
+			return new ResponseEntity<Producto>(productoService.guardar(productoBD), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Producto>(HttpStatus.BAD_REQUEST);
 		}
-		productoBD.setActivo(true);
-		return new ResponseEntity<Producto>(productoService.guardar(productoBD), HttpStatus.OK);
+		
+		
 	}
 	
 	@PutMapping("/{id}")
@@ -60,11 +62,11 @@ public class ProductoController {
 		Producto productoBD=null;
 		try {
 			productoBD = mapper.readValue(producto, Producto.class);
-		} catch (IOException e) {
-			e.printStackTrace();
+			productoBD.setId(id);
+			return new ResponseEntity<Producto>(productoService.guardar(productoBD), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Producto>(HttpStatus.BAD_REQUEST);
 		}
-		productoBD.setId(id);
-		return new ResponseEntity<Producto>(productoService.guardar(productoBD), HttpStatus.OK);
 	}
 	
 }
